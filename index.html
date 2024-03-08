@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服装推荐系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background.jpg'); /* 背景图片路径 */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            padding-top: 50px;
+            color: #ffffff; /* 文字颜色 */
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.7); /* 背景颜色及透明度 */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+        #clothing-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        
+
+        #loading-animation {
+            display: none; /* 默认隐藏 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">服装推荐系统</h1>
+        <div class="mb-3">
+            <label for="clothing-input" class="form-label">请输入您的服装要求：</label>
+            <input type="text" class="form-control" id="clothing-input" placeholder="例如：蓝色衬衫，休闲" style="color: #000000;">
+        </div>
+        <button id="recommend-btn" class="btn btn-primary mb-3">获取服装推荐</button>
+
+        <div id="loading-animation">奋力加载中...</div>
+
+        <div>
+            <img id="clothing-image" src="" alt="服装图片" class="d-none">
+        </div>
+    </div>
+    <script src="script.js"></script>
+    
+</body>
+</html>
