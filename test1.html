@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服装推荐系统</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <title>服装创作系统</title>
+    <link rel="stylesheet" href="bootstrap5/bootstrap.min.css">
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('background.jpg'); /* 背景图片路径 */
+            background-image: url('background.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
             padding-top: 50px;
-            color: #ffffff; /* 文字颜色 */
+            color: #ffffff; 
         }
         .container {
             max-width: 600px;
             margin: auto;
-            background-color: rgba(0, 0, 0, 0.7); /* 背景颜色及透明度 */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -30,9 +32,8 @@
             color: #ffffff;
         }
         #clothing-image {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-            margin-top: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
@@ -44,29 +45,99 @@
             background-color: #0056b3;
             border-color: #0056b3;
         }
-        
-
         #loading-animation {
-            display: none; /* 默认隐藏 */
+            display: none;
+            margin-left: 20px;
+            font-style: italic;
+            color: #999999;
+        }
+        #image-container {
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 600px; /* 调整最大宽度 */
+            margin: auto; /* 水平居中 */
+            display: flex; /* 使用Flexbox布局 */
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+        }
+
+        #recommend-btn-container {
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1 class="mb-4">服装推荐系统</h1>
-        <div class="mb-3">
-            <label for="clothing-input" class="form-label">请输入您的服装要求：</label>
-            <input type="text" class="form-control" id="clothing-input" placeholder="例如：蓝色衬衫，休闲" style="color: #000000;">
-        </div>
-        <button id="recommend-btn" class="btn btn-primary mb-3">获取服装推荐</button>
+    <body>
+        <div class="container">
+            <h1 class="mb-4">服装创作系统</h1>
+            <div class="mb-3">
+                <label for="clothing-input" class="form-label">请输入您的服装要求：</label>
+                <input type="text" class="form-control" id="clothing-input" placeholder="例如：我想要一件休闲的蓝色衬衫。" style="color: #000000;">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">请选择图片清晰度：</label>
+                <div class="btn-group" role="group" aria-label="Image Quality">
+                    <input type="radio" class="btn-check" name="image-quality" id="normal" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="normal">普通</label>
 
-        <div id="loading-animation">奋力加载中...</div>
+                    <input type="radio" class="btn-check" name="image-quality" id="hd" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="hd">高清</label>
 
-        <div>
-            <img id="clothing-image" src="" alt="服装图片" class="d-none">
+                    <input type="radio" class="btn-check" name="image-quality" id="ultra-hd" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="ultra-hd">超清</label>
+                </div>
+            </div>
+            <div id="recommend-btn-container" class="mb-3">
+                <button id="recommend-btn" class="btn btn-primary">获取服装推荐</button>
+                <div id="loading-animation" style="display: none;">奋力加载中...</div> 
+            </div>
         </div>
-    </div>
-    <script src="script.js"></script>
-    
-</body>
+
+
+        
+        <div id="image-container" class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div id="image-carousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            图片将在此处动态展示
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#image-carousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+
+        <script>
+            // 当文档加载完成后执行
+            $(document).ready(function() {
+                var $carousel = $('#image-carousel .carousel-inner');
+
+                // 监听新图片添加事件
+                $(document).on('newImageAdded', function(event, imageUrl) {
+                    var $item = $('<div class="carousel-item"><img src="' + imageUrl + '" class="d-block w-100"></div>');
+                    $carousel.append($item);
+
+                    // 如果是第一张图片,将其设置为活动项
+                    if ($carousel.find('.carousel-item').length === 1) {
+                        $item.addClass('active');
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
